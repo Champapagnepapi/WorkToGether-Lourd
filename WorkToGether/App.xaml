@@ -1,0 +1,11 @@
+﻿<Application x:Class="WorkToGether.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:WorkToGether" xmlns:converters="clr-namespace:WorkToGether.Converters"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <converters:ObjectToVisibilityConverter x:Key="SharedObjectToVisibilityConverter" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

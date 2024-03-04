@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="WorkToGether.View.Location"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WorkToGether.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="#F0F0F0">
+        <Button Content="Exporter en PDF"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Margin="15"
+                Width="120"
+                Background="#4CAF50" 
+                Foreground="White"
+                Click="ExportToPdf">
+        </Button>
+
+        <DataGrid Margin="15"
+                  Padding="10"
+                  Height="350"
+                  RowHeight="30"
+                  Background="White"
+                  Name="DatagridClient"
+                  ItemsSource="{Binding Locations}"
+                  SelectedItem="{Binding SelectedLocation}"
+                  DisplayMemberPath="Id"
+                  AutoGenerateColumns="False"
+                  RowBackground="#E0E0E0"
+                  GridLinesVisibility="All"
+                  HorizontalGridLinesBrush="Black"
+                  VerticalGridLinesBrush="Black"
+                  IsReadOnly="True">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id"
+                                   Binding="{Binding Id}"
+                                   Width="50" />
+                <DataGridTextColumn Header="Nom"
+                                   Binding="{Binding Nom}"
+                                   Width="150" />
+
+                <DataGridTextColumn Header="Nom Du Client"
+                                   Binding="{Binding Users.Nom}"
+                                   Width="150" />
+
+                <DataGridTextColumn Header="Nom Du Pack"
+                                   Binding="{Binding Pack.Nom}"
+                                   Width="150" />
+                <DataGridTextColumn Header="Nombre d'unité"
+                                   Binding="{Binding NbUnite}"
+                                   Width="150" />
+
+                <DataGridTextColumn Header="Type de Location"
+                                   Binding="{Binding Type.Nom}"
+                                   Width="150" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>
