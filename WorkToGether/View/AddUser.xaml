@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WorkToGether.View"
         mc:Ignorable="d"
-        Title="Ajouter un Utilisateur" Height="300" Width="400">
+        Title="Ajouter un Utilisateur" Height="350" Width="400">
     <Grid Margin="20">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -18,6 +18,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <!-- Nouvelle ligne ajoutée pour le bouton -->
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0" Grid.Column="0" Content="Nom de l'utilisateur:" VerticalAlignment="Center" HorizontalAlignment="Right"/>
@@ -38,6 +40,7 @@
         <Label Grid.Row="5" Grid.Column="0" Content="Rôle:" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,5,0,0"/>
         <TextBox Grid.Row="5" Grid.Column="1" x:Name="RolesTextBox" Margin="10,5,0,0" Width="200"/>
 
-        <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Content="Ajouter" HorizontalAlignment="Center" Width="100"  Click="AddUsers"/>
+        <Button Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Content="Ajouter" HorizontalAlignment="Center" Width="100" Margin="0,10,0,0" Click="AddUsers"/>
+        
     </Grid>
 </Window>

@@ -59,7 +59,6 @@
             <Button Content="Supprimer Un Utilisateur" Margin="10,0,0,0" Width="180" Background="#FF5722" Foreground="White" Click="DeleteUser"/>
             <Button Content="Modifier" Margin="10,0,0,0" Width="120" Background="#2196F3" Foreground="White" Click="UpdateUser"/>
 
-            <Button Content="Retour" Margin="10,0,0,0" Width="120" Background="LightGreen" Foreground="White" Click="ReturnButton_Click"/>
         </StackPanel>
     </Grid>
 
