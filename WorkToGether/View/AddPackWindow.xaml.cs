@@ -14,6 +14,9 @@ namespace WorkToGether.View
         private void AddPack(object sender, RoutedEventArgs e)
         {
             ((PackViewModel)this.DataContext).AddPack(NomTextBox.Text, PrixTextBox.Text, NombreEmplacementTextBox.Text, ReductionTextBox.Text);
+            
+            Close();
+
         }
     }
 }

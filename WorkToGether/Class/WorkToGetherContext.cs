@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace WorkToGether.DBLib.Class;
+namespace WorkToGether.Class;
 
 public partial class WorkToGetherContext : DbContext
 {
@@ -16,6 +16,8 @@ public partial class WorkToGetherContext : DbContext
     }
 
     public virtual DbSet<Baie> Baies { get; set; }
+
+    public virtual DbSet<Categorie> Categories { get; set; }
 
     public virtual DbSet<DoctrineMigrationVersion> DoctrineMigrationVersions { get; set; }
 
@@ -33,14 +35,13 @@ public partial class WorkToGetherContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer//("Server=10.193.46.4;User Id=sa;Password=Not24get;Database=worktogether;Integrated Security=False;Trusted_Connection=False;TrustServerCertificate=True;");
-        ("Server=localhost;User Id=sa;Password=sql2022;Database=WorktoGether;Integrated Security=False;Trusted_Connection=False;TrustServerCertificate=True;");
+        => optionsBuilder.UseSqlServer("Server=localhost;Database=WorkToGether;Trusted_Connection=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Baie>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__baie__3213E83F1B825F3A");
+            entity.HasKey(e => e.Id).HasName("PK__baie__3213E83F6F3F396D");
 
             entity.ToTable("baie");
 
@@ -52,9 +53,28 @@ public partial class WorkToGetherContext : DbContext
             entity.Property(e => e.Statut).HasColumnName("statut");
         });
 
+        modelBuilder.Entity<Categorie>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__categori__3213E83FFEC39D1E");
+
+            entity.ToTable("categorie");
+
+            entity.HasIndex(e => e.UniteId, "IDX_497DD634EC4A74AB");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Nom)
+                .HasMaxLength(255)
+                .HasColumnName("nom");
+            entity.Property(e => e.UniteId).HasColumnName("unite_id");
+
+            entity.HasOne(d => d.Unite).WithMany(p => p.Categories)
+                .HasForeignKey(d => d.UniteId)
+                .HasConstraintName("FK_497DD634EC4A74AB");
+        });
+
         modelBuilder.Entity<DoctrineMigrationVersion>(entity =>
         {
-            entity.HasKey(e => e.Version).HasName("PK__doctrine__79B5C94C55385B2D");
+            entity.HasKey(e => e.Version).HasName("PK__doctrine__79B5C94CF323CA44");
 
             entity.ToTable("doctrine_migration_versions");
 
@@ -69,7 +89,7 @@ public partial class WorkToGetherContext : DbContext
 
         modelBuilder.Entity<Location>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__location__3213E83F178595C5");
+            entity.HasKey(e => e.Id).HasName("PK__location__3213E83F0E08761F");
 
             entity.ToTable("location");
 
@@ -77,9 +97,12 @@ public partial class WorkToGetherContext : DbContext
 
             entity.HasIndex(e => e.UsersId, "IDX_5E9E89CB67B3B43D");
 
+            entity.HasIndex(e => e.CategorieId, "IDX_5E9E89CBBCF5E72D");
+
             entity.HasIndex(e => e.TypeId, "IDX_5E9E89CBC54C8C93");
 
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.CategorieId).HasColumnName("categorie_id");
             entity.Property(e => e.DateDeb)
                 .HasPrecision(6)
                 .HasColumnName("date_deb");
@@ -91,8 +114,13 @@ public partial class WorkToGetherContext : DbContext
                 .HasMaxLength(255)
                 .HasColumnName("nom");
             entity.Property(e => e.PackId).HasColumnName("pack_id");
+            entity.Property(e => e.Quantite).HasColumnName("quantite");
             entity.Property(e => e.TypeId).HasColumnName("type_id");
             entity.Property(e => e.UsersId).HasColumnName("users_id");
+
+            entity.HasOne(d => d.Categorie).WithMany(p => p.Locations)
+                .HasForeignKey(d => d.CategorieId)
+                .HasConstraintName("FK_5E9E89CBBCF5E72D");
 
             entity.HasOne(d => d.Pack).WithMany(p => p.Locations)
                 .HasForeignKey(d => d.PackId)
@@ -110,7 +138,7 @@ public partial class WorkToGetherContext : DbContext
 
         modelBuilder.Entity<MessengerMessage>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__messenge__3213E83F3A806B2E");
+            entity.HasKey(e => e.Id).HasName("PK__messenge__3213E83F6B66AD01");
 
             entity.ToTable("messenger_messages");
 
@@ -146,7 +174,7 @@ public partial class WorkToGetherContext : DbContext
 
         modelBuilder.Entity<Pack>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__pack__3213E83F8AD028A9");
+            entity.HasKey(e => e.Id).HasName("PK__pack__3213E83F509B92A0");
 
             entity.ToTable("pack");
 
@@ -166,7 +194,7 @@ public partial class WorkToGetherContext : DbContext
 
         modelBuilder.Entity<Type>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__type__3213E83F6B82A7DE");
+            entity.HasKey(e => e.Id).HasName("PK__type__3213E83F0E6C85F0");
 
             entity.ToTable("type");
 
@@ -178,7 +206,7 @@ public partial class WorkToGetherContext : DbContext
 
         modelBuilder.Entity<Unite>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__unite__3213E83FF3D8D6B4");
+            entity.HasKey(e => e.Id).HasName("PK__unite__3213E83F6AFB7CB3");
 
             entity.ToTable("unite");
 
@@ -200,18 +228,16 @@ public partial class WorkToGetherContext : DbContext
 
             entity.HasOne(d => d.Location).WithMany(p => p.Unites)
                 .HasForeignKey(d => d.LocationId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_1D64C11864D218E");
 
             entity.HasOne(d => d.Type).WithMany(p => p.Unites)
                 .HasForeignKey(d => d.TypeId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_1D64C118C54C8C93");
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__user__3213E83F13AEA6D2");
+            entity.HasKey(e => e.Id).HasName("PK__user__3213E83F7A1EEF89");
 
             entity.ToTable("user");
 

@@ -26,9 +26,14 @@ namespace WorkToGether
 
     public partial class MainWindow : Window
     {
+        public object MainFrame { get; internal set; }
+
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new UserViewModel();
+
+            
         }
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {

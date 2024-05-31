@@ -1,13 +1,16 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using iText.Svg.Renderers.Path.Impl;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using WorkToGether.DBLib.Class;
 using WorkToGether.Internal;
 using WorkToGether.View;
@@ -36,7 +39,7 @@ namespace WorkToGether.ViewModels
 
         public UserViewModel()
         {
-            using(WorkToGetherContext context = new WorkToGetherContext())
+            using (WorkToGetherContext context = new WorkToGetherContext())
             {
                 this.Users = new ObservableCollection<DBLib.Class.User>(context.Users);
 
@@ -59,62 +62,76 @@ namespace WorkToGether.ViewModels
                     return;
                 }
 
-           
+
                 var userLocations = context.Locations.Where(l => l.UsersId == this._SelectedUser.Id);
                 context.Locations.RemoveRange(userLocations);
 
-               
+
                 context.Users.Remove(this._SelectedUser);
 
-       
+
                 context.SaveChanges();
 
-                
+
                 this.Users.Remove(this._SelectedUser);
             }
         }
 
 
-        public void AddUser(string nom, string prenom, string password, string numero, string email, string roles)
+        public void AddUsers(string nom, string prenom, string password, string numero, string email, string roles)
         {
             using (WorkToGetherContext context = new WorkToGetherContext())
             {
-                DBLib.Class.User newUser = new DBLib.Class.User();
-                newUser.Nom = nom;
-                newUser.Prenom = prenom;
-                newUser.Password = password;
-                newUser.Numero = numero;
-                newUser.Email = email;
-                newUser.Roles = roles;
+                DBLib.Class.User newUser = new DBLib.Class.User()
+                {
+                    Nom = nom,
+                    Prenom = prenom,
+                    Password = password,
+                    Numero = numero,
+                    Email = email,
+                    Roles = roles
+                };
 
                 try
                 {
-                    // Ajouter le nouvel utilisateur au contexte
                     context.Users.Add(newUser);
-
-                    // Enregistrer les modifications dans la base de données
                     context.SaveChanges();
+                    Users.Add(newUser);
 
-                    // Mettre à jour la liste des utilisateurs après ajout
-                    this.Users.Add(newUser);
 
-                    MessageBox.Show("Utilisateur ajouté avec succès.");
                 }
                 catch (DbUpdateException ex)
                 {
-                    // Gérer les exceptions liées aux conflits de clés étrangères
-                    if (ex.InnerException is SqlException innerException && innerException.Number == 547)
-                    {
-                        MessageBox.Show("Erreur : Impossible d'ajouter l'utilisateur en raison de contraintes de clés étrangères.");
-                    }
-                    else
-                    {
-                        MessageBox.Show($"Erreur lors de l'ajout de l'utilisateur : {ex.Message}");
-                    }
+                    HandleDbUpdateException(ex);
                 }
+
+
+        
+
             }
         }
 
+
+        private void HandleDbUpdateException(DbUpdateException ex)
+        {
+            if (ex.InnerException is SqlException innerException && innerException.Number == 547)
+            {
+                MessageBox.Show("Erreur : Impossible d'ajouter l'utilisateur en raison de contraintes de clés étrangères.");
+            }
+            else
+            {
+                MessageBox.Show($"Erreur lors de l'ajout de l'utilisateur : {ex.Message}");
+            }
+        }
+
+
+        //  public void LoadUsers()
+        // {
+        // using (WorkToGetherContext context = new WorkToGetherContext())
+        //{
+        //    Users = new ObservableCollection<DBLib.Class.User>(context.Users.ToList());
+        //}
+        //}
 
 
 
@@ -179,7 +196,16 @@ namespace WorkToGether.ViewModels
 
 
         }
-    }
 
+
+        public void RetourButton_Click()
+        {
+            // Ferme la fenêtre actuelle
+          
+        }
+
+
+
+    }
 
 }

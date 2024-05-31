@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using WorkToGether.DBLib.Class;
 using WorkToGether.Internal;
 using WorkToGether.View;
@@ -60,6 +61,7 @@ namespace WorkToGether.ViewModels
                         packToUpdate.NombreEmplacement = this.SelectedPack.NombreEmplacement;
 
                         ctx.SaveChanges();
+                        MessageBox.Show("les Modifications ont été pris en compte");
                     }
                     else
                     {
@@ -105,14 +107,24 @@ namespace WorkToGether.ViewModels
                     // Mettre à jour la collection de packs
                     this.Packs.Add(pack); // Ajouter le nouveau pack à la collection existante
 
+                  
+                    MessageBox.Show("Pack Ajouté avec succès");
+
+
                     // Fermer la fenêtre d'ajout de pack
                     Window window = Application.Current.Windows[Application.Current.Windows.Count - 1];
                     window.Close();
+
+                    // Rafraîchir la vue
+                    ICollectionView view = CollectionViewSource.GetDefaultView(this.Packs);
+                    view.Refresh();
+
                 }
+
                 catch (Exception ex)
                 {
                     // Afficher l'erreur interne
-                    MessageBox.Show($"Erreur lors de l'ajout du pack : {ex.InnerException.Message}");
+                    MessageBox.Show("Veillez saisir des valeurs correctes");
                 }
             }
         }

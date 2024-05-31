@@ -7,30 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <StackPanel>
-            <Button Content="Ajouter Une Baie"
-                    Margin="10"
-                    Width="120"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Click="addBaie">
-            </Button>
-
-            <Button Content="Supprimer Une Baie"
-                    Margin="10"
-                    Width="120"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Click="DeleteBaie">
-            </Button>
-
-            <Button Content="Modifier"
-                    Margin="10"
-                    Width="120"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Click="updateBaie">
-            </Button>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
+            <Button Content="Ajouter une Baie" Width="150" Background="#007ACC" Foreground="White" Click="addBaie"/>
+            <Button Content="Supprimer une Baie" Width="150" Background="#007ACC" Foreground="White" Click="DeleteBaie" Margin="5,0,0,0"/>
+            <Button Content="Modifier" Width="150" Background="#007ACC" Foreground="White" Click="updateBaie" Margin="5,0,0,0"/>
         </StackPanel>
 
         <DataGrid Margin="15"
@@ -49,20 +29,10 @@
                   IsReadOnly="False">
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id"
-                                    Binding="{Binding Id}"
-                                    Width="50" />
-                <DataGridTextColumn Header="Nom"
-                                    Binding="{Binding Code}"
-                                    Width="150" />
-
-                <DataGridCheckBoxColumn Header="Statut"
-                                        Binding="{Binding Statut}"
-                                        Width="150" />
-
-                <DataGridTextColumn Header="Capacité"
-                                    Binding="{Binding Capacite}"
-                                    Width="150" />
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="50" />
+                <DataGridTextColumn Header="Nom" Binding="{Binding Code}" Width="150" />
+                <DataGridCheckBoxColumn Header="Statut" Binding="{Binding Statut}" Width="150" />
+                <DataGridTextColumn Header="Capacité" Binding="{Binding Capacite}" Width="150" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

@@ -25,6 +25,16 @@ namespace WorkToGether.View
         {
             InitializeComponent();
             this.DataContext = new LocationViewModel();
+
+            // Trouver la fenêtre parente
+            Window parentWindow = Window.GetWindow(this);
+
+            // Vérifier si la fenêtre parente n'est pas null
+            if (parentWindow != null)
+            {
+                // Définir la propriété WindowState de la fenêtre parente sur Maximized
+                parentWindow.WindowState = WindowState.Maximized;
+            }
         }
 
         public void ExportToPdf(object sender, RoutedEventArgs e)

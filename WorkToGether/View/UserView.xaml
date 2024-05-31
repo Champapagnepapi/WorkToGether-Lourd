@@ -7,6 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        
+        
         <DataGrid Margin="15"
                   Padding="10"
                   Height="350"
@@ -56,6 +58,9 @@
             <Button Content="Ajouter Un Utilisateur" Width="180" Background="#4CAF50" Foreground="White" Click="AjouterUserButton_Click"/>
             <Button Content="Supprimer Un Utilisateur" Margin="10,0,0,0" Width="180" Background="#FF5722" Foreground="White" Click="DeleteUser"/>
             <Button Content="Modifier" Margin="10,0,0,0" Width="120" Background="#2196F3" Foreground="White" Click="UpdateUser"/>
+
+            <Button Content="Retour" Margin="10,0,0,0" Width="120" Background="LightGreen" Foreground="White" Click="ReturnButton_Click"/>
         </StackPanel>
     </Grid>
+
 </UserControl>

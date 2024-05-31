@@ -21,10 +21,15 @@ namespace WorkToGether.View
     /// </summary>
     public partial class User : UserControl
     {
+        private readonly UserViewModel _viewModel;
+        private readonly AddUser _addUserWindow;
+
         public User()
         {
             InitializeComponent();
-            this.DataContext = new UserViewModel();
+            _viewModel = new UserViewModel();
+            DataContext = _viewModel;
+
         }
 
 
@@ -36,7 +41,11 @@ namespace WorkToGether.View
 
         private void AjouterUserButton_Click(object sender, RoutedEventArgs e)
            => ((UserViewModel)this.DataContext).AjouterUserButton_Click();
+ 
+        private void ReturnButton_Click(object sender, RoutedEventArgs e)
+             => ((UserViewModel)this.DataContext).RetourButton_Click();
 
-       
+   
+
     }
 }
